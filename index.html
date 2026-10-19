@@ -100,9 +100,12 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.2}
 @media (max-width:899px){
   nav.tabs button.mid{position:relative;justify-content:flex-end;padding-top:0;color:var(--primary);font-weight:800}
   nav.tabs button.mid .disc{position:absolute;top:-22px;inset-inline:0;margin:auto;width:58px;height:58px;border-radius:50%;background:var(--primary);color:var(--primary-ink);
-    display:grid;place-items:center;border:4px solid var(--sheet);box-shadow:0 4px 12px rgba(14,30,36,.28)}
+    display:grid;place-items:center;border:4px solid var(--sheet);box-shadow:0 4px 14px rgba(185,138,42,.45)}
   nav.tabs button.mid .disc svg{width:27px;height:27px;stroke-width:2.1}
-  nav.tabs button.mid[aria-selected="true"] .disc{background:var(--zone);color:#FFFFFF}
+  nav.tabs button.mid .disc{background:var(--zone);color:#FFFFFF}
+  nav.tabs button.mid[aria-selected="true"] .disc{box-shadow:0 0 0 3px var(--primary),0 4px 14px rgba(185,138,42,.5)}
+  nav.tabs button.mid{color:var(--zone)}
+  #t-summary{order:1} #t-map{order:2} #t-slides{order:3} #t-atlas{order:4} #t-film{order:5}
   nav.tabs button.mid .lab{margin-top:38px}
 }
 @media (min-width:900px){ nav.tabs button.mid .disc{display:contents} }
@@ -114,7 +117,7 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.2}
 @media (min-width:640px){.slgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (min-width:1000px){.slgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 .slc{display:flex;flex-direction:column;text-align:start;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;overflow:hidden;cursor:pointer;padding:0;min-width:0;position:relative}
-.slc .th{width:100%;aspect-ratio:16/9;display:block;background-color:#E9EEEC;background-image:url(sl/thumbs.jpg);background-size:500% 1100%;background-repeat:no-repeat;border-bottom:1px solid var(--rule)}
+.slc .th{width:100%;aspect-ratio:16/9;display:block;background-color:#E9EEEC;background-image:url(sl/thumbs.jpg?v=3);background-size:500% 1100%;background-repeat:no-repeat;border-bottom:1px solid var(--rule)}
 .slc .tx{padding:6px 8px 8px;display:flex;gap:6px;align-items:baseline;min-width:0}
 .slc .n{flex:none;font-size:12px;font-weight:800;color:var(--zone)}
 .slc .h{font-size:12.5px;font-weight:600;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -480,7 +483,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 <!-- SLIDES -->
 <section class="tab wrap" id="sec-slides" aria-labelledby="t-slides" hidden>
   <div class="sheet-h"><span class="no">برگ ۲ از ۵</span><h2>اسلایدهای ارائه جلسه دفاع</h2><p>هر ۵۵ اسلاید ارائه، به همان ترتیبی که در جلسه نمایش داده می‌شود. روی هر اسلاید بزنید تا تمام‌صفحه باز شود؛ با کشیدن انگشت ورق بزنید و با دو ضربه بزرگ‌نمایی کنید.</p></div>
-  <div class="slact"><button class="pri" type="button" id="slStart"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>شروع نمایش از اسلاید ۱</button><a class="sec" href="sl/slides.pdf" download="اسلایدهای_دفاع_فرهاد_عابدی.pdf">دانلود PDF ارائه</a></div>
+  <div class="slact"><button class="pri" type="button" id="slStart"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>شروع نمایش از اسلاید ۱</button><a class="sec" href="sl/slides.pdf?v=3" download="اسلایدهای_دفاع_فرهاد_عابدی.pdf">دانلود PDF ارائه</a></div>
   <p class="rot">برای خواناتر شدن متن اسلایدها، در نمای تمام‌صفحه گوشی را افقی بگیرید.</p>
   <div class="chips" id="slChips" role="group" aria-label="فصل" style="margin-bottom:12px"></div>
   <div class="slgrid" id="slGrid"></div>
@@ -1018,7 +1021,7 @@ const SL = [{"t": "جلد: عنوان پایان‌نامه", "c": 0}, {"t": "س
 const CH = ['همه اسلایدها', 'فصل ۱: کلیات', 'فصل ۲: مبانی نظری', 'فصل ۳: روش‌شناسی', 'فصل ۴: یافته‌ها', 'فصل ۵: نتایج و راهبردها'];
 const CHN = ['آغاز ارائه', 'فصل اول ـ کلیات پژوهش', 'فصل دوم ـ مبانی نظری', 'فصل سوم ـ روش‌شناسی', 'فصل چهارم ـ یافته‌ها', 'فصل پنجم ـ نتایج و راهبردها', 'پایان ارائه'];
 const pad = n => String(n).padStart(2, '0');
-const SLV = SL.map((x, i) => ({id: 's' + pad(i + 1), src: `sl/s${pad(i + 1)}.jpg`, no: 'اسلاید ' + fa(i + 1), t: x.t, g: CHN[x.c],
+const SLV = SL.map((x, i) => ({id: 's' + pad(i + 1), src: `sl/s${pad(i + 1)}.jpg?v=3`, no: 'اسلاید ' + fa(i + 1), t: x.t, g: CHN[x.c],
   d: x.v ? `در فایل پاورپوینت، این اسلاید کلیپ زنده «${x.v}» دارد؛ کلیپ را در برگ «فیلم» ببینید.` : CHN[x.c]}));
 (function slidesUI() {
   const grid = $('slGrid'), chips = $('slChips'); let cur = 0;
