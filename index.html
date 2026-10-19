@@ -260,6 +260,13 @@ svg text{font-family:var(--f-ui)}
 #mapwrap.fs .maplegend{max-height:30vh;overflow-y:auto;background:#FFFFFF;border:1px solid #CCD6D3;border-radius:6px;padding:6px 10px}
 #mapwrap.fs .maplegend .rows,#mapwrap.fs .maplegend .note,#mapwrap.fs .maplegend .rampl{color:#4B5D64}
 #mapwrap.fs .fsbtn{display:none}
+#b3d[aria-pressed="true"]{background:var(--primary);color:var(--primary-ink);border-color:var(--primary)}
+#mapwrap.fs #b3d{display:grid}
+.c3d{position:absolute;inset:6px;display:block;width:calc(100% - 12px);height:calc(100% - 12px);touch-action:none;cursor:grab;border-radius:1px}
+.mapframe.is3d svg#msvg{visibility:hidden}
+.mapframe.is3d .north,.mapframe.is3d .sbar{display:none}
+.hint3d{position:absolute;inset-inline-start:12px;bottom:10px;z-index:2;font-size:11.5px;color:#18282F;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:3px}
+
 #mapwrap.fs.nolegend .maplegend{display:none}
 .fsonly{display:none}
 #mapwrap.fs .fsonly{display:flex}
@@ -300,6 +307,15 @@ svg text{font-family:var(--f-ui)}
 .clip video{aspect-ratio:1600/1074}
 .clip h3{font-size:15px;font-weight:700}
 .clip p{margin:0;font-size:13px;color:var(--ink2)}
+.f3grid{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:700px){.f3grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1100px){.f3grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.f3{padding:10px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.f3.wide{grid-column:1/-1}
+.f3 .no{font-size:12px;font-weight:700;color:var(--zone)}
+.f3 h3{font-size:15.5px;font-weight:700;line-height:1.5}
+.f3 p{margin:0;font-size:13px;color:var(--ink2)}
+.f3 .dur{font-size:12px;color:var(--ink3)}
 footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 .toast{position:fixed;inset-inline:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 10px);display:flex;justify-content:center;pointer-events:none;z-index:99}
 .toast span{background:#18282F;color:#FFFFFF;font-size:13px;padding:6px 14px;border-radius:999px;max-width:90vw}
@@ -403,6 +419,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
       <div class="fsonly fsbar"><span class="sel" id="fsSel"></span><button type="button" id="fsLeg">راهنمای نقشه</button><button type="button" class="exit" id="fsExit">خروج ✕</button></div>
       <div class="mtool">
         <button type="button" class="layerbtn" id="layerBtn" aria-haspopup="dialog"><span class="sw" id="lbSw"></span><span class="tx"><small id="lbGrp"></small><b id="lbName"></b></span><span class="chev">لایه‌ها</span></button>
+        <button type="button" class="fsbtn" id="b3d" aria-pressed="false" aria-label="نمای سه‌بعدی"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg>سه‌بعدی</button>
         <button type="button" class="fsbtn" id="fsBtn" aria-label="نقشه تمام‌صفحه"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>تمام‌صفحه</button>
       </div>
       <div class="chips" id="subChips" role="group" aria-label="گزینه‌های لایه"></div>
@@ -436,13 +453,15 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 
 <!-- FILM -->
 <section class="tab wrap" id="sec-film" aria-labelledby="t-film" hidden>
-  <div class="sheet-h"><span class="no">برگ ۴ از ۴</span><h2>کلیپ‌های کوتاه هر نقشه</h2><p>هر کلیپ روی نقشه پایان‌نامه تمام می‌شود. فیلم کامل در صفحه «خلاصه» است.</p></div>
+  <div class="sheet-h"><span class="no">برگ ۴ از ۴</span><h2>فیلم‌های سه‌بعدی</h2><p>هشت فیلم سه‌بعدی از نقشه‌های پایان‌نامه؛ زیر هر فیلم، دکمه‌ای همان نقشه را زنده باز می‌کند. فیلم‌ها بدون صدا هستند.</p></div>
+  <div class="f3grid" id="f3grid"></div>
+  <div class="chart-h" style="margin-top:18px"><h3 style="font-size:17px">کلیپ‌های کوتاه هر نقشه</h3><span class="lbl">هر کلیپ روی نقشه پایان‌نامه تمام می‌شود</span></div>
   <div class="clips">
     <div class="panel clip"><video controls playsinline preload="none" poster="img/m43_t.jpg" src="vid/clip_a.mp4"></video><h3>پراکنش پروانه‌ها سال به سال</h3><p>پروانه‌های هر سال روی نقشه می‌نشینند و به نقشه ۴-۳ می‌رسند.</p><button class="go" type="button" data-go="atlas:m43">دیدن نقشه ۴-۳</button></div>
     <div class="panel clip"><video controls playsinline preload="none" poster="img/m47_t.jpg" src="vid/clip_b.mp4"></video><h3>کانون‌های تراکم (کرنل)</h3><p>سطح تراکم کرنل به شکل برجسته نمایش داده می‌شود و به نقشه ۴-۷ می‌رسد.</p><button class="go" type="button" data-go="atlas:m47">دیدن نقشه ۴-۷</button></div>
     <div class="panel clip"><video controls playsinline preload="none" poster="img/m410_t.jpg" src="vid/clip_c.mp4"></video><h3>کانون‌ها در سه دوره</h3><p>مقایسه تراکم در سه دوره زمانی و رسیدن به نقشه ۴-۱۰.</p><button class="go" type="button" data-go="atlas:m410">دیدن نقشه ۴-۱۰</button></div>
   </div>
-  <footer>منبع همه نقشه‌ها و فیلم‌ها: پایگاه GIS شهرداری مشهد (پروانه‌های ساختمانی ۱۳۹۰ تا ۱۳۹۹)؛ پردازش نگارنده.</footer>
+  <footer>منبع همه نقشه‌ها و فیلم‌ها: پایگاه GIS شهرداری مشهد (پروانه‌های ساختمانی ۱۳۹۰ تا ۱۳۹۹)؛ پردازش نگارنده. فیلم‌های سه‌بعدی از همان داده‌های تجمیع‌شده تحلیل‌های فصل ۴ ساخته شده‌اند.</footer>
 </section>
 </main>
 
@@ -498,7 +517,7 @@ function show(t) {
   TABS.forEach(k => { $('sec-' + k).hidden = k !== t; $('t-' + k).setAttribute('aria-selected', String(k === t)); });
   document.querySelectorAll('video').forEach(v => { if (!$('sec-' + t).contains(v)) v.pause(); });
   if (t === 'summary') drawYears();
-  if (t === 'map') drawMap(); else exitFs();
+  if (t === 'map') drawMap(); else { exitFs(); if (T3 && T3.on) exit3d(); }
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('nav.tabs button').forEach(b => b.addEventListener('click', () => { location.hash = b.dataset.tab; }));
@@ -659,7 +678,7 @@ function drawMap() {
   $('subChips').addEventListener('click', onChip);
   interact(s);
   $('zin').onclick = () => zoom(1 / 1.6); $('zout').onclick = () => zoom(1.6); $('zreset').onclick = () => resizeView(true);
-  $('fsBtn').onclick = enterFs; $('fsExit').onclick = () => exitFs(); $('fsLeg').onclick = () => $('mapwrap').classList.toggle('nolegend');
+  $('fsBtn').onclick = enterFs; $('b3d').onclick = toggle3d; $('fsExit').onclick = () => exitFs(); $('fsLeg').onclick = () => $('mapwrap').classList.toggle('nolegend');
   window.addEventListener('resize', () => resizeView());
   const top = KEEP.reduce((a, b) => b.n / km2(b) > a.n / km2(a) ? b : a);
   state.sel = D.nb.indexOf(top);
@@ -719,6 +738,7 @@ function paint() {
   $('mapnote').textContent = note; $('mapnote').hidden = !note;
   $('fsSel').textContent = l.name + (note ? ' ـ ' + note : '');
   legend(l, b);
+  if (T3 && T3.on) { if (l.kind === 'kde') { exit3d(); toast('این لایه فقط نمای دوبعدی دارد؛ فیلم سه‌بعدی آن در بخش فیلم است'); } else update3d(); }
   $('scbox').hidden = !(l.kind === 'lisa' && state.lisa === 'all');
   if (state.sel != null) select(state.sel, false); else if (!$('scbox').hidden) drawScatter();
 }
@@ -769,7 +789,7 @@ function drawEll(on) {
 function lisaColor(k) { return k === 'NS' ? 'var(--ink2)' : (k === 'HH' || k === 'HL') ? 'var(--hot)' : 'var(--cold)'; }
 function select(i, center) {
   const d = D.nb[i]; if (!d) return; state.sel = i;
-  $('selp').setAttribute('d', d.p);
+  $('selp').setAttribute('d', d.p); if (T3 && T3.on) mark3d();
   if (center) { view.cx = d.cx; view.cy = d.cy; view.s = Math.min(view.s, view.s0 / 2.2); applyView(); }
   if ($('mapwrap').classList.contains('fs')) toast(d.keep ? `${d.name} ـ ${num(d.n)} پروانه در ۱۰ سال` : d.name + ' (خارج از تحلیل)');
   const box = $('info'); box.innerHTML = '';
@@ -839,6 +859,7 @@ function applyView() {
   const pxPerKm = 1000 * D.sc / view.s; const nice = [0.25, 0.5, 1, 2, 5, 10]; let km = nice[0]; for (const n of nice) if (n * pxPerKm <= 110) km = n;
   $('sbarI').style.width = (km * pxPerKm).toFixed(0) + 'px'; $('sbarT').textContent = (km < 1 ? km * 1000 + ' m' : km + ' km');
   if (L() && L().kind === 'ell') drawEll(true);
+  if (T3 && T3.on) size3d();
 }
 function zoom(f, mx, my) { const old = view.s; view.s = Math.min(view.s0, Math.max(view.s0 / 10, view.s * f)); if (mx != null) { const k = view.s / old; view.cx = mx + (view.cx - mx) * k; view.cy = my + (view.cy - my) * k; } applyView(); }
 function toMap(px, py) { const r = $('msvg').getBoundingClientRect(); return [view.cx + (px - r.left - r.width / 2) * view.s, view.cy + (py - r.top - r.height / 2) * view.s]; }
@@ -942,6 +963,140 @@ function vzoom(f, cx, cy) { const st = $('stage').getBoundingClientRect(); if (c
   st.addEventListener('pointerup', end); st.addEventListener('pointercancel', end);
   st.addEventListener('wheel', e => { e.preventDefault(); const r = st.getBoundingClientRect(); vzoom(e.deltaY > 0 ? 1 / 1.2 : 1.2, e.clientX - r.left, e.clientY - r.top); }, {passive: false});
   window.addEventListener('resize', () => { if (!$('viewer').hidden) fit(); });
+})();
+
+
+
+/* ---------- live 3D (three.js, loaded on demand) ---------- */
+let T3 = null, threeP = null;
+function loadThree() {
+  if (window.THREE) return Promise.resolve();
+  if (threeP) return threeP;
+  const urls = ['https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js', 'https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js', 'https://unpkg.com/three@0.128.0/build/three.min.js'];
+  threeP = new Promise((res, rej) => { let k = 0; const next = () => { if (k >= urls.length) { threeP = null; rej(new Error('three')); return; } const sc = document.createElement('script'); sc.src = urls[k++]; sc.onload = () => window.THREE ? res() : next(); sc.onerror = next; document.head.appendChild(sc); }; next(); });
+  return threeP;
+}
+function ringsOf(p) { const out = []; p.split('Z').forEach(seg => { const nums = seg.match(/-?[\d.]+/g); if (!nums || nums.length < 6) return; const pts = []; for (let k = 0; k + 1 < nums.length; k += 2) pts.push([+nums[k], +nums[k + 1]]); out.push(pts); }); return out; }
+function toggle3d() { if (T3 && T3.on) exit3d(); else enter3d(); }
+async function enter3d() {
+  const l = L(); if (l.kind === 'kde') setLayer('dens');
+  $('b3d').disabled = true; toast('در حال آماده‌سازی نمای سه‌بعدی…');
+  try { await loadThree(); } catch (e) { $('b3d').disabled = false; toast('نمای سه‌بعدی بارگذاری نشد؛ اتصال اینترنت را بررسی کنید'); return; }
+  $('b3d').disabled = false;
+  if (!T3) build3d();
+  T3.on = true; T3.auto = true; $('mapframe').classList.add('is3d'); T3.canvas.hidden = false; T3.hint.hidden = false; $('b3d').setAttribute('aria-pressed', 'true');
+  ['zin', 'zout', 'zreset'].forEach(id => $(id).dataset.mode = '3d');
+  size3d(); update3d(); mark3d(); loop3d();
+  toast('با یک انگشت یا موس بچرخانید؛ با دو انگشت زوم کنید');
+}
+function exit3d() { if (!T3) return; T3.on = false; $('mapframe').classList.remove('is3d'); T3.canvas.hidden = true; T3.hint.hidden = true; $('b3d').setAttribute('aria-pressed', 'false'); ['zin', 'zout', 'zreset'].forEach(id => delete $(id).dataset.mode); }
+function build3d() {
+  const TH = window.THREE, fr = $('mapframe');
+  const canvas = document.createElement('canvas'); canvas.className = 'c3d'; fr.appendChild(canvas);
+  const hint = document.createElement('div'); hint.className = 'hint3d'; hint.textContent = 'نمای سه‌بعدی: ارتفاع = مقدار همین لایه'; fr.appendChild(hint);
+  const renderer = new TH.WebGLRenderer({canvas, antialias: true}); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setClearColor(0xFBFBF8, 1);
+  const scene = new TH.Scene();
+  const camera = new TH.PerspectiveCamera(38, 1, 5, 8000);
+  scene.add(new TH.HemisphereLight(0xFFFFFF, 0x8899AA, 0.75));
+  const sun = new TH.DirectionalLight(0xFFFFFF, 0.65); sun.position.set(-600, 900, -300); scene.add(sun);
+  const cx = D.vb[0] / 2, cz = D.vb[1] / 2;
+  const meshes = D.nb.map((d, i) => {
+    const shapes = ringsOf(d.p).map(r => new TH.Shape(r.map(([x, y]) => new TH.Vector2(x - cx, -(y - cz)))));
+    const g = new TH.ExtrudeGeometry(shapes, {depth: 1, bevelEnabled: false}); g.rotateX(-Math.PI / 2);
+    const m = new TH.Mesh(g, new TH.MeshLambertMaterial({color: 0xDDDDDD})); m.userData.i = i; m.scale.y = 0.5; scene.add(m);
+    const edges = new TH.LineSegments(new TH.EdgesGeometry(g, 30), new TH.LineBasicMaterial({color: 0xFFFFFF, transparent: true, opacity: .55})); m.add(edges);
+    return m;
+  });
+  const line = (p, col, y) => ringsOf(p).forEach(r => { const pts = r.map(([x, z]) => new TH.Vector3(x - cx, y, z - cz)); pts.push(pts[0]); scene.add(new TH.Line(new TH.BufferGeometry().setFromPoints(pts), new TH.LineBasicMaterial({color: col}))); });
+  line(D.city, 0x18282F, 0.3);
+  const ground = new TH.Mesh(new TH.PlaneGeometry(1400, 1300), new TH.MeshBasicMaterial({color: 0xEEF2F0})); ground.rotation.x = -Math.PI / 2; ground.position.y = -0.5; scene.add(ground);
+  const sel = new TH.LineSegments(new TH.BufferGeometry(), new TH.LineBasicMaterial({color: 0x111111})); scene.add(sel);
+  T3 = {renderer, scene, camera, meshes, canvas, hint, sel, on: false, auto: true, az: -0.55, el: 0.85, r: 1250, tgt: new TH.Vector3(0, 0, 0), raf: 0, h: meshes.map(() => 0.5), ht: meshes.map(() => 0.5)};
+  // orbit: one pointer rotates, two pointers pinch-zoom, wheel zooms; a short tap selects
+  const P = new Map(); let st = null, pin = null, moved = false;
+  canvas.addEventListener('pointerdown', e => { canvas.setPointerCapture(e.pointerId); P.set(e.pointerId, [e.clientX, e.clientY]); T3.auto = false; if (P.size === 1) { st = {x: e.clientX, y: e.clientY, az: T3.az, el: T3.el, t: Date.now()}; moved = false; } if (P.size === 2) { const [a, b] = [...P.values()]; pin = {d: Math.hypot(a[0] - b[0], a[1] - b[1]), r: T3.r}; moved = true; } });
+  canvas.addEventListener('pointermove', e => { if (!P.has(e.pointerId)) return; P.set(e.pointerId, [e.clientX, e.clientY]); if (P.size === 2 && pin) { const [a, b] = [...P.values()]; T3.r = Math.min(2600, Math.max(260, pin.r * pin.d / Math.hypot(a[0] - b[0], a[1] - b[1]))); } else if (P.size === 1 && st) { const dx = e.clientX - st.x, dy = e.clientY - st.y; if (Math.hypot(dx, dy) > 5) moved = true; T3.az = st.az - dx * 0.008; T3.el = Math.min(1.45, Math.max(0.18, st.el + dy * 0.006)); } });
+  const up = e => { const tap = P.size === 1 && st && !moved && Date.now() - st.t < 500; P.delete(e.pointerId); if (P.size < 2) pin = null; if (!P.size) st = null; if (tap) pick3d(e.clientX, e.clientY); };
+  canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', e => { P.delete(e.pointerId); pin = null; st = null; });
+  canvas.addEventListener('wheel', e => { e.preventDefault(); T3.auto = false; T3.r = Math.min(2600, Math.max(260, T3.r * (e.deltaY > 0 ? 1.12 : 1 / 1.12))); }, {passive: false});
+  const zf = f => () => { T3.auto = false; T3.r = Math.min(2600, Math.max(260, T3.r * f)); };
+  const oz = {zin: $('zin').onclick, zout: $('zout').onclick, zreset: $('zreset').onclick};
+  $('zin').onclick = () => $('zin').dataset.mode ? zf(1 / 1.3)() : oz.zin(); $('zout').onclick = () => $('zout').dataset.mode ? zf(1.3)() : oz.zout();
+  $('zreset').onclick = () => { if ($('zreset').dataset.mode) { T3.az = -0.55; T3.el = 0.85; T3.r = 1250; T3.auto = true; } else oz.zreset(); };
+}
+function pick3d(x, y) {
+  const TH = window.THREE, r = T3.canvas.getBoundingClientRect();
+  const v = new TH.Vector2((x - r.left) / r.width * 2 - 1, -((y - r.top) / r.height) * 2 + 1);
+  const rc = new TH.Raycaster(); rc.setFromCamera(v, T3.camera);
+  const hit = rc.intersectObjects(T3.meshes, false)[0]; if (hit) select(hit.object.userData.i, false);
+}
+function size3d() { const r = T3.canvas.getBoundingClientRect(); T3.renderer.setSize(Math.max(r.width, 50), Math.max(r.height, 50), false); T3.camera.aspect = Math.max(r.width, 50) / Math.max(r.height, 50); T3.camera.updateProjectionMatrix(); }
+function height3d(d) {
+  const l = L(); if (!d.keep) return 0.02;
+  let v, lo = 0, hi = 1;
+  if (l.kind === 'lisa') { v = d.n / km2(d); hi = 634; }
+  else { v = l.v(d, state); if (v == null || !isFinite(v)) return 0.02; const vals = KEEP.map(x => l.v(x, state)).filter(x => x != null && isFinite(x)); lo = Math.min(...vals); hi = Math.max(...vals); if (l.id === 'dens' && state.year) { lo = 0; hi = T3.ymax || (T3.ymax = Math.max(...KEEP.flatMap(x => x.y.map(y => y / km2(x))))); } if (l.id === 'dens' && !state.year) lo = 0; }
+  return 0.04 + 0.96 * Math.max(0, (v - lo) / ((hi - lo) || 1));
+}
+function update3d() {
+  if (!T3) return;
+  const isE = L().kind === 'ell'; ell3d(isE);
+  if (isE) { D.nb.forEach((d, i) => { T3.meshes[i].material.color.set(d.keep ? '#E4E6E1' : '#EEEEEA'); T3.ht[i] = 0.6; }); return; }
+  D.nb.forEach((d, i) => { let f = paths[i].getAttribute('fill'); if (!f || f.startsWith('url')) f = '#E2E4DF'; T3.meshes[i].material.color.set(f); T3.ht[i] = height3d(d) * 95; });
+}
+
+function ell3d(on) {
+  const TH = window.THREE;
+  if (!T3.eg) {
+    const g = new TH.Group(), cx = D.vb[0] / 2, cz = D.vb[1] / 2, E = X.ell, step = 14;
+    T3.elines = E.years.map((e, k) => { const r = ringsOf(e.p)[0]; const pts = r.map(([x, z]) => new TH.Vector3(x - cx, 6 + k * step, z - cz)); pts.push(pts[0]);
+      const ln = new TH.Line(new TH.BufferGeometry().setFromPoints(pts), new TH.LineBasicMaterial({color: VIR[k], transparent: true, opacity: .95})); g.add(ln); return ln; });
+    const cp = E.years.map((e, k) => new TH.Vector3(e.cx - cx, 6 + k * step, e.cy - cz));
+    g.add(new TH.Line(new TH.BufferGeometry().setFromPoints(cp), new TH.LineBasicMaterial({color: 0xC0392B})));
+    T3.edots = cp.map((p, k) => { const m = new TH.Mesh(new TH.SphereGeometry(4, 12, 10), new TH.MeshLambertMaterial({color: VIR[k]})); m.position.copy(p); g.add(m); return m; });
+    cp.forEach((p, k) => g.add(new TH.Line(new TH.BufferGeometry().setFromPoints([new TH.Vector3(p.x, 0, p.z), p]), new TH.LineBasicMaterial({color: 0x888888, transparent: true, opacity: .35}))));
+    const ar = ringsOf(E.all.p)[0].map(([x, z]) => new TH.Vector3(x - cx, 2, z - cz)); ar.push(ar[0]);
+    g.add(new TH.Line(new TH.BufferGeometry().setFromPoints(ar), new TH.LineDashedMaterial({color: 0x18282F, dashSize: 8, gapSize: 6})).computeLineDistances());
+    T3.scene.add(g); T3.eg = g;
+  }
+  T3.eg.visible = on;
+  if (on) T3.elines.forEach((ln, k) => { const sel = state.year === X.ell.years[k].y; ln.material.opacity = state.year && !sel ? .2 : .95; T3.edots[k].scale.setScalar(sel ? 1.8 : 1); });
+}
+function mark3d() {
+  if (!T3 || state.sel == null) return; const TH = window.THREE, m = T3.meshes[state.sel];
+  T3.sel.geometry.dispose(); T3.sel.geometry = new TH.EdgesGeometry(m.geometry, 30); T3.sel.userData.i = state.sel;
+}
+function loop3d() {
+  if (!T3 || !T3.on) return;
+  T3.raf = requestAnimationFrame(loop3d);
+  if (T3.auto) T3.az += 0.0025;
+  for (let i = 0; i < T3.meshes.length; i++) { const h = T3.h[i] + (T3.ht[i] - T3.h[i]) * 0.12; T3.h[i] = h; T3.meshes[i].scale.y = Math.max(h, 0.3); }
+  if (T3.sel.userData.i != null) T3.sel.scale.y = T3.meshes[T3.sel.userData.i].scale.y * 1.002;
+  const c = T3.camera, r = T3.r; c.position.set(T3.tgt.x + r * Math.cos(T3.el) * Math.sin(T3.az), T3.tgt.y + r * Math.sin(T3.el), T3.tgt.z + r * Math.cos(T3.el) * Math.cos(T3.az)); c.lookAt(T3.tgt);
+  T3.renderer.render(T3.scene, c);
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden && T3) cancelAnimationFrame(T3.raf); else if (T3 && T3.on) loop3d(); });
+
+/* ---------- 3D films ---------- */
+const F3 = [
+  {f: 'f3d_8', no: 'فیلم کامل', t: 'ده سال ساخت‌وساز مشهد در سه‌بعد', d: 'هر هفت روایت سه‌بعدی پشت سر هم، با کارت عنوان و پیام پایانی.', go: 'map:dens', b: 'نقشه تعاملی', wide: 1},
+  {f: 'f3d_1', no: 'فیلم سه‌بعدی ۱', t: 'کوهستان تراکم سال‌به‌سال', d: 'سطح تراکم کرنل از ۱۳۹۰ تا ۱۳۹۹ بالا و پایین می‌رود؛ اوج ۱۳۹۱ و افت ۱۳۹۴ دیده می‌شود.', go: 'map:kde', b: 'کرنل سال‌به‌سال'},
+  {f: 'f3d_2', no: 'فیلم سه‌بعدی ۲', t: 'شهر ستونی محلات', d: 'ارتفاع هر محله تراکم پروانه و رنگ آن خوشه لیسا است؛ دوربین دور شهر می‌چرخد.', go: 'map:lisa:all', b: 'خوشه‌های لیسا'},
+  {f: 'f3d_3', no: 'فیلم سه‌بعدی ۳', t: 'احداث بنای جدید در برابر تجدید بنا', d: 'قله‌های احداث در اراضی خام شمال‌غرب و قله‌های نوسازی در بافت میانی غرب و شرق.', go: 'map:lisa:new', b: 'خوشه‌های احداث'},
+  {f: 'f3d_4', no: 'فیلم سه‌بعدی ۴', t: 'مکعب فضا ـ زمان مرکز ثقل', d: 'ده بیضی انحراف معیار روی هم، با محور عمودی زمان؛ مسیر مرکز ثقل از میان آن‌ها می‌گذرد.', go: 'map:ell', b: 'بیضی‌های سالانه'},
+  {f: 'f3d_5', no: 'فیلم سه‌بعدی ۵', t: 'ضریب محلی ارزش زمین در GWR', d: 'ارتفاع و رنگ هر محله، شدت اثر ارزش زمین بر صدور پروانه است.', go: 'map:gwr0', b: 'ضرایب GWR'},
+  {f: 'f3d_6', no: 'فیلم سه‌بعدی ۶', t: 'کانون‌های تراکم در سه دوره', d: 'سطح تراکم در سه دوره به هم تبدیل می‌شود؛ همان نقشه ۴-۱۰ در سه‌بعد.', go: 'atlas:m410', b: 'نقشه ۴-۱۰'},
+  {f: 'f3d_7', no: 'فیلم سه‌بعدی ۷', t: 'بعد عمودی ساخت‌وساز', d: 'ارتفاع هر محله، میانگین تعداد طبقات پروانه‌های آن است (نقشه ۴-۶).', go: 'map:floors', b: 'لایه طبقات'},
+];
+(function films3d() {
+  const box = $('f3grid');
+  F3.forEach(x => {
+    const c = document.createElement('div'); c.className = 'panel f3' + (x.wide ? ' wide' : '');
+    c.innerHTML = '<video controls playsinline preload="none"></video><span class="no"></span><h3></h3><p></p><button class="go" type="button"></button>';
+    const v = c.querySelector('video'); v.poster = `vid/${x.f}.jpg`; v.src = `vid/${x.f}.mp4`;
+    c.querySelector('.no').textContent = x.no; c.querySelector('h3').textContent = x.t; c.querySelector('p').textContent = x.d;
+    const b = c.querySelector('button'); b.textContent = 'دیدن زنده: ' + x.b; b.dataset.go = x.go; box.appendChild(c);
+  });
 })();
 
 /* ---------- boot ---------- */
