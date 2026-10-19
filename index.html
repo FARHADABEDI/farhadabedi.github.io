@@ -90,11 +90,37 @@ h1,h2,h3{text-wrap:balance;margin:0}
 .helpbtn{flex:none;border:1px solid var(--rule);background:var(--sheet);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer}
 nav.tabs{position:fixed;inset:auto 0 0 0;z-index:55;background:var(--sheet);border-top:1px solid var(--rule);
   padding-bottom:env(safe-area-inset-bottom,0px);padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
-nav.tabs .row{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+nav.tabs .row{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
 nav.tabs button{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px 7px;min-height:var(--nav-h);cursor:pointer;color:var(--ink3);font-size:12px;font-weight:500;line-height:1.3}
 nav.tabs button svg{width:24px;height:24px}
 nav.tabs button[aria-selected="true"]{color:var(--primary);font-weight:700}
 nav.tabs button[aria-selected="true"] svg{stroke-width:2.2}
+
+/* centre "slides" button: raised round disc on the phone tab bar */
+@media (max-width:899px){
+  nav.tabs button.mid{position:relative;justify-content:flex-end;padding-top:0;color:var(--primary);font-weight:800}
+  nav.tabs button.mid .disc{position:absolute;top:-22px;inset-inline:0;margin:auto;width:58px;height:58px;border-radius:50%;background:var(--primary);color:var(--primary-ink);
+    display:grid;place-items:center;border:4px solid var(--sheet);box-shadow:0 4px 12px rgba(14,30,36,.28)}
+  nav.tabs button.mid .disc svg{width:27px;height:27px;stroke-width:2.1}
+  nav.tabs button.mid[aria-selected="true"] .disc{background:var(--zone);color:#FFFFFF}
+  nav.tabs button.mid .lab{margin-top:38px}
+}
+@media (min-width:900px){ nav.tabs button.mid .disc{display:contents} }
+/* slides sheet */
+.slact{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.slact .pri{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:9px 18px;font-weight:800;font-size:14px;cursor:pointer}
+.slact a.sec{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--primary);color:var(--primary);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px;text-decoration:none}
+.slgrid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:640px){.slgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1000px){.slgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.slc{display:flex;flex-direction:column;text-align:start;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;overflow:hidden;cursor:pointer;padding:0;min-width:0;position:relative}
+.slc .th{width:100%;aspect-ratio:16/9;display:block;background-color:#E9EEEC;background-image:url(sl/thumbs.jpg);background-size:500% 1100%;background-repeat:no-repeat;border-bottom:1px solid var(--rule)}
+.slc .tx{padding:6px 8px 8px;display:flex;gap:6px;align-items:baseline;min-width:0}
+.slc .n{flex:none;font-size:12px;font-weight:800;color:var(--zone)}
+.slc .h{font-size:12.5px;font-weight:600;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.slc .vb{position:absolute;top:6px;inset-inline-start:6px;background:var(--hot);color:#FFF;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px}
+.slc.div{border-color:var(--primary)}
+.rot{font-size:12.5px;color:var(--ink2);margin:0 0 10px}
 main{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 24px)}
 @media (min-width:900px){
   nav.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 57px);inset:auto;border-top:0;border-bottom:1px solid var(--rule);padding-bottom:0}
@@ -344,7 +370,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
       <li><span>روی <b>هر محله</b> بزنید یا نام آن را جستجو کنید تا آمار ده‌ساله، خوشه و ضرایب مدل آن را ببینید.</span></li>
       <li><span><b>نمایش سال‌به‌سال</b> روی نقشه‌ها، از ۱۳۹۰ تا ۱۳۹۹، با دکمه پخش.</span></li>
       <li><span>نقشه را <b>تمام‌صفحه</b> کنید و با دو انگشت بزرگ‌نمایی کنید.</span></li>
-      <li><span>در <b>اطلس</b>، همه نقشه‌ها و نمودارهای پایان‌نامه و نقشه‌های تکمیلی را تمام‌صفحه ببینید.</span></li>
+      <li><span>همه نقشه‌ها را در <b>اطلس</b> و هر ۵۵ اسلاید ارائه را در <b>اسلایدهای ارائه</b> تمام‌صفحه ببینید.</span></li>
     </ul>
     <button class="enter" id="enter" type="button">ورود به پنل
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -363,6 +389,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 <nav class="tabs" aria-label="بخش‌های پنل">
   <div class="row" role="tablist">
     <button role="tab" id="t-summary" data-tab="summary" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M7 16v-3M12 16V8M17 16v-5"/></svg>خلاصه</button>
+    <button role="tab" id="t-slides" data-tab="slides" aria-selected="false" class="mid"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16v4M8 20h8M8.5 12l2.5-3 2 2 2.5-3.5"/></svg></span><span class="lab">اسلایدهای ارائه</span></button>
     <button role="tab" id="t-map" data-tab="map" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg>نقشه تعاملی</button>
     <button role="tab" id="t-atlas" data-tab="atlas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>اطلس نقشه‌ها</button>
     <button role="tab" id="t-film" data-tab="film" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M10 9.5v5l4.5-2.5z"/></svg>فیلم</button>
@@ -419,7 +446,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 
 <!-- MAP -->
 <section class="tab wrap" id="sec-map" aria-labelledby="t-map" hidden>
-  <div class="sheet-h"><span class="no">برگ ۲ از ۴</span><h2>نقشه تعاملی محلات مشهد</h2><p>از کشوی لایه‌ها یک نقشه انتخاب کنید و روی هر محله بزنید. برای بررسی دقیق، نقشه را تمام‌صفحه کنید.</p></div>
+  <div class="sheet-h"><span class="no">برگ ۳ از ۵</span><h2>نقشه تعاملی محلات مشهد</h2><p>از کشوی لایه‌ها یک نقشه انتخاب کنید و روی هر محله بزنید. برای بررسی دقیق، نقشه را تمام‌صفحه کنید.</p></div>
   <div class="mapgrid">
     <div id="mapwrap">
       <div class="fsonly fsbar"><span class="sel" id="fsSel"></span><button type="button" id="fsLeg">راهنمای نقشه</button><button type="button" class="exit" id="fsExit">خروج ✕</button></div>
@@ -450,16 +477,26 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
   </div>
 </section>
 
+<!-- SLIDES -->
+<section class="tab wrap" id="sec-slides" aria-labelledby="t-slides" hidden>
+  <div class="sheet-h"><span class="no">برگ ۲ از ۵</span><h2>اسلایدهای ارائه جلسه دفاع</h2><p>هر ۵۵ اسلاید ارائه، به همان ترتیبی که در جلسه نمایش داده می‌شود. روی هر اسلاید بزنید تا تمام‌صفحه باز شود؛ با کشیدن انگشت ورق بزنید و با دو ضربه بزرگ‌نمایی کنید.</p></div>
+  <div class="slact"><button class="pri" type="button" id="slStart"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>شروع نمایش از اسلاید ۱</button><a class="sec" href="sl/slides.pdf" download="اسلایدهای_دفاع_فرهاد_عابدی.pdf">دانلود PDF ارائه</a></div>
+  <p class="rot">برای خواناتر شدن متن اسلایدها، در نمای تمام‌صفحه گوشی را افقی بگیرید.</p>
+  <div class="chips" id="slChips" role="group" aria-label="فصل" style="margin-bottom:12px"></div>
+  <div class="slgrid" id="slGrid"></div>
+  <footer>اسلایدها از فایل ارائه جلسه دفاع (داده‌های ۱۳۹۰ تا ۱۳۹۹) تهیه شده‌اند. کلیپ‌های زنده اسلایدهای ۲۶ و ۲۸ در برگ «فیلم» قابل مشاهده‌اند.</footer>
+</section>
+
 <!-- ATLAS -->
 <section class="tab wrap" id="sec-atlas" aria-labelledby="t-atlas" hidden>
-  <div class="sheet-h"><span class="no">برگ ۳ از ۴</span><h2>اطلس نقشه‌های پایان‌نامه</h2><p>روی هر نقشه بزنید تا تمام‌صفحه باز شود؛ در آنجا می‌توانید بزرگ‌نمایی کنید و به نقشه بعدی بروید.</p></div>
+  <div class="sheet-h"><span class="no">برگ ۴ از ۵</span><h2>اطلس نقشه‌های پایان‌نامه</h2><p>روی هر نقشه بزنید تا تمام‌صفحه باز شود؛ در آنجا می‌توانید بزرگ‌نمایی کنید و به نقشه بعدی بروید.</p></div>
   <div class="chips" id="atlasChips" role="group" aria-label="دسته نقشه" style="margin-bottom:12px"></div>
   <div class="cards" id="cards"></div>
 </section>
 
 <!-- FILM -->
 <section class="tab wrap" id="sec-film" aria-labelledby="t-film" hidden>
-  <div class="sheet-h"><span class="no">برگ ۴ از ۴</span><h2>فیلم‌های سه‌بعدی</h2><p>هشت فیلم سه‌بعدی از نقشه‌های پایان‌نامه؛ زیر هر فیلم، دکمه‌ای همان نقشه را زنده باز می‌کند. فیلم‌ها بدون صدا هستند.</p></div>
+  <div class="sheet-h"><span class="no">برگ ۵ از ۵</span><h2>فیلم‌های سه‌بعدی</h2><p>هشت فیلم سه‌بعدی از نقشه‌های پایان‌نامه؛ زیر هر فیلم، دکمه‌ای همان نقشه را زنده باز می‌کند. فیلم‌ها بدون صدا هستند.</p></div>
   <div class="f3grid" id="f3grid"></div>
   <div class="chart-h" style="margin-top:18px"><h3 style="font-size:17px">کلیپ‌های کوتاه هر نقشه</h3><span class="lbl">هر کلیپ روی نقشه پایان‌نامه تمام می‌شود</span></div>
   <div class="clips">
@@ -517,7 +554,7 @@ const km2 = d => d.ha / 100;
 $('help').addEventListener('click', () => { $('welcome').hidden = false; $('welcome').scrollTop = 0; document.body.style.overflow = 'hidden'; $('enter').focus(); });
 
 /* ---------- tabs ---------- */
-const TABS = ['summary', 'map', 'atlas', 'film'];
+const TABS = ['summary', 'slides', 'map', 'atlas', 'film'];
 const currentTab = () => { const h = location.hash.replace('#', ''); return TABS.includes(h) ? h : 'summary'; };
 function show(t) {
   TABS.forEach(k => { $('sec-' + k).hidden = k !== t; $('t-' + k).setAttribute('aria-selected', String(k === t)); });
@@ -762,7 +799,7 @@ function legend(l, b) {
     if (['res', 'mixed', 'chg', 'svc'].includes(state.lisa)) lg.appendChild(note('نتایج این گروه در جدول فصل ۴ آمده و این نقشه تکمیلی از همان نتایج ترسیم شده است.'));
   } else if (l.kind === 'kde') {
     ttl.textContent = `تراکم کرنل پروانه‌ها ـ سال ${fa(state.year)} (مقیاس رنگ مشترک برای همه سال‌ها)`;
-    const r = document.createElement('div'); r.className = 'ramp'; r.style.background = 'linear-gradient(90deg,rgba(253,240,213,.6),#F9C98B,#F0965A,#D45A3A,#9E2A2B)';
+    const r = document.createElement('div'); r.className = 'ramp'; r.style.background = 'linear-gradient(to left,rgba(253,240,213,.6),#F9C98B,#F0965A,#D45A3A,#9E2A2B)';
     const rl = document.createElement('div'); rl.className = 'rampl'; rl.innerHTML = '<span>کم</span><span>زیاد</span>';
     lg.append(r, rl, note(`بیشینه تراکم در این سال حدود ${num(X.kde.peak[state.year])} پروانه در کیلومترمربع؛ کرنل گاوسی با پهنای ۹۰۰ متر.`));
   } else if (l.kind === 'ell') {
@@ -943,11 +980,13 @@ let atlasGroup = null;
   render();
 })();
 let vi = 0, vz = {s: 1, x: 0, y: 0, base: 1};
-function openViewer(i, noPush) {
-  if (i < 0) return; vi = i; const a = ATLAS[i]; const v = $('viewer'); v.hidden = false; document.body.style.overflow = 'hidden';
-  $('vTitle').innerHTML = ''; const t = document.createElement('span'); t.textContent = a.no + ' ـ ' + a.t; const sm = document.createElement('small'); sm.textContent = `${fa(i + 1)} از ${fa(ATLAS.length)}، ${a.g}`; $('vTitle').append(t, sm);
-  $('vdesc').textContent = a.d; $('vfull').href = `img/${a.id}.jpg`;
-  const img = $('vimg'); img.alt = a.t; img.style.opacity = .35; img.onload = () => { img.style.opacity = 1; fit(); }; img.src = `img/${a.id}.jpg`; if (img.complete && img.naturalWidth) { img.style.opacity = 1; fit(); }
+let VL = null;
+function openViewer(i, noPush, list) {
+  if (list) VL = list; else if (!noPush || !VL) VL = ATLAS;
+  if (i < 0) return; vi = i; const a = VL[i]; const v = $('viewer'); v.hidden = false; document.body.style.overflow = 'hidden';
+  $('vTitle').innerHTML = ''; const t = document.createElement('span'); t.textContent = a.no + ' ـ ' + a.t; const sm = document.createElement('small'); sm.textContent = `${fa(i + 1)} از ${fa(VL.length)}، ${a.g}`; $('vTitle').append(t, sm);
+  $('vdesc').textContent = a.d; const src = a.src || `img/${a.id}.jpg`; $('vfull').href = src;
+  const img = $('vimg'); img.alt = a.t; img.style.opacity = .35; img.onload = () => { img.style.opacity = 1; fit(); }; img.src = src; if (img.complete && img.naturalWidth) { img.style.opacity = 1; fit(); }
   if (!noPush) { try { history.pushState({viewer: 1}, ''); } catch (_) {} }
   $('vclose').focus();
 }
@@ -958,8 +997,8 @@ function apply() { $('vimg').style.transform = `translate(${vz.x}px,${vz.y}px) s
 function vzoom(f, cx, cy) { const st = $('stage').getBoundingClientRect(); if (cx == null) { cx = st.width / 2; cy = st.height / 2; } const ox = cx - st.width / 2, oy = cy - st.height / 2; const ns = Math.min(vz.base * 8, Math.max(vz.base, vz.s * f)); const k = ns / vz.s; vz.x = ox - (ox - vz.x) * k; vz.y = oy - (oy - vz.y) * k; vz.s = ns; if (ns === vz.base) fit(); else apply(); }
 (function viewerUI() {
   $('vclose').onclick = () => closeViewer(false);
-  $('vnext').onclick = () => openViewer((vi + 1) % ATLAS.length, true);
-  $('vprev').onclick = () => openViewer((vi - 1 + ATLAS.length) % ATLAS.length, true);
+  $('vnext').onclick = () => openViewer((vi + 1) % VL.length, true);
+  $('vprev').onclick = () => openViewer((vi - 1 + VL.length) % VL.length, true);
   $('vzi').onclick = () => vzoom(1.6); $('vzo').onclick = () => vzoom(1 / 1.6);
   document.addEventListener('keydown', e => { if ($('viewer').hidden) return; if (e.key === 'Escape') closeViewer(false); if (e.key === 'ArrowLeft') $('vnext').click(); if (e.key === 'ArrowRight') $('vprev').click(); });
   const st = $('stage'), P = new Map(); let g = null, tapT = 0, sw = null;
@@ -972,6 +1011,33 @@ function vzoom(f, cx, cy) { const st = $('stage').getBoundingClientRect(); if (c
 })();
 
 
+
+
+/* ---------- slides ---------- */
+const SL = [{"t": "جلد: عنوان پایان‌نامه", "c": 0}, {"t": "ساختار ارائه", "c": 0}, {"t": "فصل ۱: از مسئله تا فرایند پژوهش", "c": 1}, {"t": "بیان مسئله", "c": 1}, {"t": "اهداف و سؤالات پژوهش", "c": 1}, {"t": "ضرورت و نوآوری پژوهش", "c": 1}, {"t": "فرایند انجام پژوهش", "c": 1}, {"t": "فصل ۲: از مفاهیم پایه تا مدل مفهومی پژوهش", "c": 2}, {"t": "توسعه شهری و الگوهای فضایی آن", "c": 2}, {"t": "نظریه‌های ساختار فضایی شهر", "c": 2}, {"t": "پروانه ساختمانی: از مجوز اداری تا داده مکانی ـ زمانی", "c": 2}, {"t": "عوامل مؤثر بر مکان‌یابی و توزیع فضایی ساخت‌وساز", "c": 2}, {"t": "پیشینه پژوهش و شکاف مطالعاتی", "c": 2}, {"t": "از نظریه تا مؤلفه‌های تحلیلی", "c": 2}, {"t": "چارچوب نظری پژوهش: مدل مفهومی", "c": 2}, {"t": "فصل ۳: روش‌شناسی پژوهش", "c": 3}, {"t": "طرح و رویکرد پژوهش", "c": 3}, {"t": "محدوده مورد مطالعه: کلان‌شهر مشهد", "c": 3}, {"t": "بستر اقتصادی ـ فضایی: شاخص نسبی ارزش زمین", "c": 3}, {"t": "جامعه آماری، نمونه و منابع داده", "c": 3}, {"t": "آماده‌سازی داده و ژئوکدینگ", "c": 3}, {"t": "سطوح و روش‌های تحلیل داده‌ها", "c": 3}, {"t": "متغیرهای مدل و جهت اثر مورد انتظار", "c": 3}, {"t": "فصل ۴: یافته‌های پژوهش", "c": 4}, {"t": "تصویر کلی فعالیت ساختمانی (۱۳۹۰ تا ۱۳۹۹)", "c": 4}, {"t": "الگوی پراکنش پروانه‌ها و تمایز نوع عملیات", "c": 4, "v": "پراکنش پروانه‌ها سال به سال"}, {"t": "الگوی مکانی به تفکیک کاربری و شاخص‌های کمی پروانه", "c": 4}, {"t": "کانون‌های تراکم ساخت‌وساز (تحلیل تراکم کرنل)", "c": 4, "v": "تراکم کرنل سه‌بعدی و سه دوره"}, {"t": "کانون‌های تراکم به تفکیک نوع عملیات و کاربری", "c": 4}, {"t": "آزمون الگوی نقطه‌ای: نزدیک‌ترین همسایه و تابع K ریپلی", "c": 4}, {"t": "خودهمبستگی فضایی: موران جهانی و LISA", "c": 4}, {"t": "خوشه‌های معنادار به تفکیک نوع عملیات و کاربری", "c": 4}, {"t": "پویایی مکانی ـ زمانی: مرکز ثقل و بیضی انحراف معیار", "c": 4}, {"t": "مدل‌سازی پیش‌ران‌ها: OLS در برابر GWR", "c": 4}, {"t": "ناهمگنی فضایی اثر پیش‌ران‌ها (ضرایب محلی GWR)", "c": 4}, {"t": "تبیین نهادی: مضامین حاصل از مصاحبه با خبرگان", "c": 4}, {"t": "مثلث‌سازی: تلفیق شواهد فضایی و نهادی", "c": 4}, {"t": "فصل ۵: پاسخ به سؤالات، بحث و راهبردهای مکانی", "c": 5}, {"t": "جمع‌بندی یافته‌ها به تفکیک روش تحلیل", "c": 5}, {"t": "پاسخ به سؤال فرعی اول", "c": 5}, {"t": "پاسخ به سؤال فرعی دوم", "c": 5}, {"t": "پاسخ به سؤال اصلی پژوهش", "c": 5}, {"t": "بحث: یافته‌ها در پرتو نظریه", "c": 5}, {"t": "تحلیل قوت، ضعف، فرصت و تهدید (SWOT)", "c": 5}, {"t": "از یافته به راهبرد: منطق پهنه‌بندی راهبردی", "c": 5}, {"t": "پهنه‌های راهبردی بر نقشه شهر", "c": 5}, {"t": "ماتریس راهبردها و سیاست‌های مکانی (۱)", "c": 5}, {"t": "ماتریس راهبردها و سیاست‌های مکانی (۲)", "c": 5}, {"t": "راهبردهای فراپهنه‌ای و چرخه پایش", "c": 5}, {"t": "شاخص‌های پیشنهادی پایش راهبردها", "c": 5}, {"t": "دستاوردها و نوآوری‌های پژوهش", "c": 5}, {"t": "محدودیت‌های پژوهش", "c": 5}, {"t": "پیشنهادها", "c": 5}, {"t": "نتیجه‌گیری نهایی", "c": 5}, {"t": "سپاس از توجه شما", "c": 6}];
+const CH = ['همه اسلایدها', 'فصل ۱: کلیات', 'فصل ۲: مبانی نظری', 'فصل ۳: روش‌شناسی', 'فصل ۴: یافته‌ها', 'فصل ۵: نتایج و راهبردها'];
+const CHN = ['آغاز ارائه', 'فصل اول ـ کلیات پژوهش', 'فصل دوم ـ مبانی نظری', 'فصل سوم ـ روش‌شناسی', 'فصل چهارم ـ یافته‌ها', 'فصل پنجم ـ نتایج و راهبردها', 'پایان ارائه'];
+const pad = n => String(n).padStart(2, '0');
+const SLV = SL.map((x, i) => ({id: 's' + pad(i + 1), src: `sl/s${pad(i + 1)}.jpg`, no: 'اسلاید ' + fa(i + 1), t: x.t, g: CHN[x.c],
+  d: x.v ? `در فایل پاورپوینت، این اسلاید کلیپ زنده «${x.v}» دارد؛ کلیپ را در برگ «فیلم» ببینید.` : CHN[x.c]}));
+(function slidesUI() {
+  const grid = $('slGrid'), chips = $('slChips'); let cur = 0;
+  CH.forEach((c, k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c; b.dataset.k = k; b.setAttribute('aria-pressed', String(k === 0)); chips.appendChild(b); });
+  function draw() {
+    grid.innerHTML = '';
+    SL.forEach((x, i) => {
+      if (cur && x.c !== cur) return;
+      const b = document.createElement('button'); b.type = 'button'; b.className = 'slc' + (/^فصل /.test(x.t) ? ' div' : '');
+      const im = document.createElement('span'); im.className = 'th'; im.style.backgroundPosition = `${(i % 5) * 25}% ${Math.floor(i / 5) * 10}%`;
+      const tx = document.createElement('div'); tx.className = 'tx'; const n = document.createElement('span'); n.className = 'n'; n.textContent = fa(i + 1); const h = document.createElement('span'); h.className = 'h'; h.textContent = x.t; tx.append(n, h);
+      b.append(im, tx); if (x.v) { const v = document.createElement('span'); v.className = 'vb'; v.textContent = 'کلیپ زنده'; b.appendChild(v); }
+      b.addEventListener('click', () => openViewer(i, false, SLV)); grid.appendChild(b);
+    });
+  }
+  chips.addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; cur = +b.dataset.k; chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === b))); draw(); });
+  $('slStart').addEventListener('click', () => openViewer(0, false, SLV));
+  draw();
+})();
 
 /* ---------- live 3D (three.js, loaded on demand) ---------- */
 let T3 = null, threeP = null;
@@ -1114,6 +1180,5 @@ const F3 = [
 let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (!$('sec-summary').hidden) drawYears(); }, 150); });
 show(currentTab());
 </script>
-
 </body>
 </html>
