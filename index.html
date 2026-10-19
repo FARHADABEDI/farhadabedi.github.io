@@ -271,7 +271,7 @@ svg text{font-family:var(--f-ui)}
 .c3d{position:absolute;inset:6px;display:block;width:calc(100% - 12px);height:calc(100% - 12px);touch-action:none;cursor:grab;border-radius:1px}
 .mapframe.is3d svg#msvg{visibility:hidden}
 .mapframe.is3d .north,.mapframe.is3d .sbar{display:none}
-.hint3d{position:absolute;inset-inline-start:12px;bottom:10px;z-index:2;font-size:11.5px;color:#18282F;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:3px}
+.hint3d{position:absolute;inset-inline-end:12px;top:10px;max-width:45%;z-index:2;font-size:11.5px;color:#18282F;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:3px}
 
 #mapwrap.fs.nolegend .maplegend{display:none}
 .fsonly{display:none}
@@ -999,7 +999,7 @@ function exit3d() { if (!T3) return; T3.on = false; $('mapframe').classList.remo
 function build3d() {
   const TH = window.THREE, fr = $('mapframe');
   const canvas = document.createElement('canvas'); canvas.className = 'c3d'; fr.appendChild(canvas);
-  const hint = document.createElement('div'); hint.className = 'hint3d'; hint.textContent = 'نمای سه‌بعدی: ارتفاع = مقدار همین لایه'; fr.appendChild(hint);
+  const hint = document.createElement('div'); hint.className = 'hint3d'; hint.textContent = 'ارتفاع = مقدار همین لایه'; fr.appendChild(hint);
   const renderer = new TH.WebGLRenderer({canvas, antialias: true}); renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2)); renderer.setClearColor(0xFBFBF8, 1);
   const scene = new TH.Scene();
   const camera = new TH.PerspectiveCamera(38, 1, 5, 8000);
