@@ -96,7 +96,7 @@ nav.tabs button svg{width:24px;height:24px}
 nav.tabs button[aria-selected="true"]{color:var(--primary);font-weight:700}
 nav.tabs button[aria-selected="true"] svg{stroke-width:2.2}
 
-/* centre "slides" button: raised round disc on the phone tab bar */
+/* centre "files" button: raised round disc on the phone tab bar */
 @media (max-width:899px){
   nav.tabs button.mid{position:relative;justify-content:flex-end;padding-top:0;color:var(--primary);font-weight:800}
   nav.tabs button.mid .disc{position:absolute;top:-22px;inset-inline:0;margin:auto;width:58px;height:58px;border-radius:50%;background:var(--primary);color:var(--primary-ink);
@@ -105,25 +105,29 @@ nav.tabs button[aria-selected="true"] svg{stroke-width:2.2}
   nav.tabs button.mid .disc{background:var(--zone);color:#FFFFFF}
   nav.tabs button.mid[aria-selected="true"] .disc{box-shadow:0 0 0 3px var(--primary),0 4px 14px rgba(185,138,42,.5)}
   nav.tabs button.mid{color:var(--zone)}
-  #t-summary{order:1} #t-map{order:2} #t-slides{order:3} #t-atlas{order:4} #t-film{order:5}
+  #t-summary{order:1} #t-map{order:2} #t-files{order:3} #t-atlas{order:4} #t-film{order:5}
   nav.tabs button.mid .lab{margin-top:38px}
 }
 @media (min-width:900px){ nav.tabs button.mid .disc{display:contents} }
-/* slides sheet */
-.slact{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.slact .pri{display:inline-flex;align-items:center;gap:8px;border:0;background:var(--primary);color:var(--primary-ink);border-radius:999px;padding:9px 18px;font-weight:800;font-size:14px;cursor:pointer}
-.slact a.sec{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--primary);color:var(--primary);border-radius:999px;padding:8px 16px;font-weight:700;font-size:14px;text-decoration:none}
-.slgrid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}
-@media (min-width:640px){.slgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (min-width:1000px){.slgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-.slc{display:flex;flex-direction:column;text-align:start;background:var(--sheet);border:1px solid var(--rule);border-radius:4px;overflow:hidden;cursor:pointer;padding:0;min-width:0;position:relative}
-.slc .th{width:100%;aspect-ratio:16/9;display:block;background-color:#E9EEEC;background-image:url(sl/thumbs.jpg?v=3);background-size:500% 1100%;background-repeat:no-repeat;border-bottom:1px solid var(--rule)}
-.slc .tx{padding:6px 8px 8px;display:flex;gap:6px;align-items:baseline;min-width:0}
-.slc .n{flex:none;font-size:12px;font-weight:800;color:var(--zone)}
-.slc .h{font-size:12.5px;font-weight:600;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.slc .vb{position:absolute;top:6px;inset-inline-start:6px;background:var(--hot);color:#FFF;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px}
-.slc.div{border-color:var(--primary)}
-.rot{font-size:12.5px;color:var(--ink2);margin:0 0 10px}
+/* downloads sheet */
+.dlgrid{display:grid;gap:12px;grid-template-columns:minmax(0,1fr)}
+@media (min-width:700px){.dlgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dl{overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.dlim{aspect-ratio:16/9;background:#E9EEEC;border-bottom:1px solid var(--rule);overflow:hidden}
+.dlim img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.dlb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px}
+.dlb h3{font-size:16px;font-weight:700;line-height:1.5}
+.dlb .meta{margin:0;font-size:12.5px;font-weight:700;color:var(--zone)}
+.dlb p{margin:0;font-size:13.5px;color:var(--ink2);line-height:1.75}
+.dla{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.dla a{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:8px 18px;font-weight:800;font-size:14px;text-decoration:none;line-height:1.4}
+.dla a svg{width:18px;height:18px}
+.dla .pri{background:var(--primary);color:var(--primary-ink)}
+.dla .sec{border:1px solid var(--primary);color:var(--primary);padding:7px 16px;font-weight:700}
+.cite{margin-top:12px;padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.cite b{font-size:14px}
+.cite p{margin:0;font-size:13.5px;line-height:1.9;color:var(--ink2)}
+.cite button{align-self:flex-start;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);border-radius:999px;padding:5px 14px;font-size:13px;cursor:pointer}
 main{padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom,0px) + 24px)}
 @media (min-width:900px){
   nav.tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 57px);inset:auto;border-top:0;border-bottom:1px solid var(--rule);padding-bottom:0}
@@ -374,7 +378,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
       <li><span>آمار ده‌ساله، خوشه و ضرایب مدل <b>هر محله</b> با لمس یا جستجو.</span></li>
       <li><span>توانایی <b>نمایش سال‌به‌سال</b> روی نقشه‌ها، ۱۳۹۰ تا ۱۳۹۹.</span></li>
       <li><span>نمای <b>تمام‌صفحه</b> و <b>سه‌بعدی</b> نقشه.</span></li>
-      <li><span><b>اطلس</b> نقشه‌ها، <b>۵۵ اسلاید ارائه</b> و <b>فیلم‌های سه‌بعدی</b>.</span></li>
+      <li><span><b>اطلس</b> نقشه‌ها، <b>فیلم‌های سه‌بعدی</b> و <b>دانلود</b> پاور و پایان‌نامه.</span></li>
     </ul>
     <button class="enter" id="enter" type="button">ورود به پنل
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
@@ -393,7 +397,7 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
 <nav class="tabs" aria-label="بخش‌های پنل">
   <div class="row" role="tablist">
     <button role="tab" id="t-summary" data-tab="summary" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="1.5"/><path d="M7 16v-3M12 16V8M17 16v-5"/></svg>خلاصه</button>
-    <button role="tab" id="t-slides" data-tab="slides" aria-selected="false" class="mid"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.2"/><path d="M12 16v4M8 20h8M8.5 12l2.5-3 2 2 2.5-3.5"/></svg></span><span class="lab">اسلایدهای ارائه</span></button>
+    <button role="tab" id="t-files" data-tab="files" aria-selected="false" class="mid"><span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M4 17v2.5h16V17"/></svg></span><span class="lab">دانلود فایل‌ها</span></button>
     <button role="tab" id="t-map" data-tab="map" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4L3 6.5v13.5l6-2.5 6 2.5 6-2.5V4l-6 2.5z"/><path d="M9 4v13.5M15 6.5V20"/></svg>نقشه تعاملی</button>
     <button role="tab" id="t-atlas" data-tab="atlas" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>اطلس نقشه‌ها</button>
     <button role="tab" id="t-film" data-tab="film" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M10 9.5v5l4.5-2.5z"/></svg>فیلم</button>
@@ -481,13 +485,31 @@ footer{margin-top:10px;font-size:12px;color:var(--ink3)}
   </div>
 </section>
 
-<!-- SLIDES -->
-<section class="tab wrap" id="sec-slides" aria-labelledby="t-slides" hidden>
-  <div class="sheet-h"><span class="no">برگ ۲ از ۵</span><h2>اسلایدهای ارائه جلسه دفاع</h2><p>۵۵ اسلاید جلسه دفاع، به ترتیب ارائه.</p></div>
-  <div class="slact"><button class="pri" type="button" id="slStart"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>شروع نمایش از اسلاید ۱</button><a class="sec" href="sl/slides.pdf?v=3" download="اسلایدهای_دفاع_فرهاد_عابدی.pdf">دانلود PDF ارائه</a></div>
-  <p class="rot">برای خوانایی بهتر، گوشی را افقی بگیرید.</p>
-  <div class="chips" id="slChips" role="group" aria-label="فصل" style="margin-bottom:12px"></div>
-  <div class="slgrid" id="slGrid"></div>
+<!-- FILES -->
+<section class="tab wrap" id="sec-files" aria-labelledby="t-files" hidden>
+  <div class="sheet-h"><span class="no">برگ ۲ از ۵</span><h2>دانلود فایل‌ها</h2><p>پاور جلسه دفاع و نسخه نمایشی پایان‌نامه.</p></div>
+  <div class="dlgrid">
+    <article class="panel dl">
+      <div class="dlim"><img src="files/slides-cover.jpg?v=1" alt="جلد پاور جلسه دفاع" loading="lazy"></div>
+      <div class="dlb">
+        <h3>پاور جلسه دفاع</h3>
+        <p class="meta">۵۵ اسلاید · ۶٫۰ مگابایت · PDF</p>
+        <p>اسلایدهای ارائه جلسه دفاع، به ترتیب ارائه.</p>
+        <div class="dla"><a class="pri" href="files/defense-slides.pdf?v=1" download="پاور_دفاع_فرهاد_عابدی.pdf" rel="nofollow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M4 17v2.5h16V17"/></svg>دانلود</a><a class="sec" href="files/defense-slides.pdf?v=1" target="_blank" rel="noopener nofollow">مشاهده</a></div>
+      </div>
+    </article>
+    <article class="panel dl">
+      <div class="dlim"><img src="files/thesis-cover.jpg?v=1" alt="صفحه عنوان پایان‌نامه" loading="lazy"></div>
+      <div class="dlb">
+        <h3>پایان‌نامه (نسخه نمایشی)</h3>
+        <p class="meta">۳۷ صفحه · ۵٫۲ مگابایت · PDF</p>
+        <p>جلد، چکیده فارسی و انگلیسی، فهرست‌ها و فصل اول (کلیات پژوهش).</p>
+        <div class="dla"><a class="pri" href="files/thesis-preview.pdf?v=1" download="پایان‌نامه_فرهاد_عابدی_نسخه_نمایشی.pdf" rel="nofollow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M4 17v2.5h16V17"/></svg>دانلود</a><a class="sec" href="files/thesis-preview.pdf?v=1" target="_blank" rel="noopener nofollow">مشاهده</a></div>
+      </div>
+    </article>
+  </div>
+  <div class="panel cite"><b>شیوه ارجاع</b><p id="citeTx">عابدی، فرهاد (۱۴۰۵). تحلیل الگوهای فضایی توسعه ساخت‌وساز شهری با تأکید بر نقش پروانه‌های ساختمانی صادره در شهر مشهد. پایان‌نامه کارشناسی ارشد برنامه‌ریزی شهری، استاد راهنما: دکتر حنائی، دانشگاه آزاد اسلامی واحد مشهد.</p><button type="button" id="copyCite">کپی متن ارجاع</button></div>
+  <footer>فصل‌های دوم تا پنجم و فهرست منابع در نسخه نمایشی نیامده‌اند.</footer>
 </section>
 
 <!-- ATLAS -->
@@ -557,8 +579,8 @@ const km2 = d => d.ha / 100;
 $('help').addEventListener('click', () => { $('welcome').hidden = false; $('welcome').scrollTop = 0; document.body.style.overflow = 'hidden'; $('enter').focus(); });
 
 /* ---------- tabs ---------- */
-const TABS = ['summary', 'slides', 'map', 'atlas', 'film'];
-const currentTab = () => { const h = location.hash.replace('#', ''); return TABS.includes(h) ? h : 'summary'; };
+const TABS = ['summary', 'files', 'map', 'atlas', 'film'];
+const currentTab = () => { let h = location.hash.replace('#', ''); if (h === 'slides') h = 'files'; return TABS.includes(h) ? h : 'summary'; };
 function show(t) {
   TABS.forEach(k => { $('sec-' + k).hidden = k !== t; $('t-' + k).setAttribute('aria-selected', String(k === t)); });
   document.querySelectorAll('video').forEach(v => { if (!$('sec-' + t).contains(v)) v.pause(); });
@@ -1016,31 +1038,13 @@ function vzoom(f, cx, cy) { const st = $('stage').getBoundingClientRect(); if (c
 
 
 
-/* ---------- slides ---------- */
-const SL = [{"t": "جلد: عنوان پایان‌نامه", "c": 0}, {"t": "ساختار ارائه", "c": 0}, {"t": "فصل ۱: از مسئله تا فرایند پژوهش", "c": 1}, {"t": "بیان مسئله", "c": 1}, {"t": "اهداف و سؤالات پژوهش", "c": 1}, {"t": "ضرورت و نوآوری پژوهش", "c": 1}, {"t": "فرایند انجام پژوهش", "c": 1}, {"t": "فصل ۲: از مفاهیم پایه تا مدل مفهومی پژوهش", "c": 2}, {"t": "توسعه شهری و الگوهای فضایی آن", "c": 2}, {"t": "نظریه‌های ساختار فضایی شهر", "c": 2}, {"t": "پروانه ساختمانی: از مجوز اداری تا داده مکانی ـ زمانی", "c": 2}, {"t": "عوامل مؤثر بر مکان‌یابی و توزیع فضایی ساخت‌وساز", "c": 2}, {"t": "پیشینه پژوهش و شکاف مطالعاتی", "c": 2}, {"t": "از نظریه تا مؤلفه‌های تحلیلی", "c": 2}, {"t": "چارچوب نظری پژوهش: مدل مفهومی", "c": 2}, {"t": "فصل ۳: روش‌شناسی پژوهش", "c": 3}, {"t": "طرح و رویکرد پژوهش", "c": 3}, {"t": "محدوده مورد مطالعه: کلان‌شهر مشهد", "c": 3}, {"t": "بستر اقتصادی ـ فضایی: شاخص نسبی ارزش زمین", "c": 3}, {"t": "جامعه آماری، نمونه و منابع داده", "c": 3}, {"t": "آماده‌سازی داده و ژئوکدینگ", "c": 3}, {"t": "سطوح و روش‌های تحلیل داده‌ها", "c": 3}, {"t": "متغیرهای مدل و جهت اثر مورد انتظار", "c": 3}, {"t": "فصل ۴: یافته‌های پژوهش", "c": 4}, {"t": "تصویر کلی فعالیت ساختمانی (۱۳۹۰ تا ۱۳۹۹)", "c": 4}, {"t": "الگوی پراکنش پروانه‌ها و تمایز نوع عملیات", "c": 4, "v": "پراکنش پروانه‌ها سال به سال"}, {"t": "الگوی مکانی به تفکیک کاربری و شاخص‌های کمی پروانه", "c": 4}, {"t": "کانون‌های تراکم ساخت‌وساز (تحلیل تراکم کرنل)", "c": 4, "v": "تراکم کرنل سه‌بعدی و سه دوره"}, {"t": "کانون‌های تراکم به تفکیک نوع عملیات و کاربری", "c": 4}, {"t": "آزمون الگوی نقطه‌ای: نزدیک‌ترین همسایه و تابع K ریپلی", "c": 4}, {"t": "خودهمبستگی فضایی: موران جهانی و LISA", "c": 4}, {"t": "خوشه‌های معنادار به تفکیک نوع عملیات و کاربری", "c": 4}, {"t": "پویایی مکانی ـ زمانی: مرکز ثقل و بیضی انحراف معیار", "c": 4}, {"t": "مدل‌سازی پیش‌ران‌ها: OLS در برابر GWR", "c": 4}, {"t": "ناهمگنی فضایی اثر پیش‌ران‌ها (ضرایب محلی GWR)", "c": 4}, {"t": "تبیین نهادی: مضامین حاصل از مصاحبه با خبرگان", "c": 4}, {"t": "مثلث‌سازی: تلفیق شواهد فضایی و نهادی", "c": 4}, {"t": "فصل ۵: پاسخ به سؤالات، بحث و راهبردهای مکانی", "c": 5}, {"t": "جمع‌بندی یافته‌ها به تفکیک روش تحلیل", "c": 5}, {"t": "پاسخ به سؤال فرعی اول", "c": 5}, {"t": "پاسخ به سؤال فرعی دوم", "c": 5}, {"t": "پاسخ به سؤال اصلی پژوهش", "c": 5}, {"t": "بحث: یافته‌ها در پرتو نظریه", "c": 5}, {"t": "تحلیل قوت، ضعف، فرصت و تهدید (SWOT)", "c": 5}, {"t": "از یافته به راهبرد: منطق پهنه‌بندی راهبردی", "c": 5}, {"t": "پهنه‌های راهبردی بر نقشه شهر", "c": 5}, {"t": "ماتریس راهبردها و سیاست‌های مکانی (۱)", "c": 5}, {"t": "ماتریس راهبردها و سیاست‌های مکانی (۲)", "c": 5}, {"t": "راهبردهای فراپهنه‌ای و چرخه پایش", "c": 5}, {"t": "شاخص‌های پیشنهادی پایش راهبردها", "c": 5}, {"t": "دستاوردها و نوآوری‌های پژوهش", "c": 5}, {"t": "محدودیت‌های پژوهش", "c": 5}, {"t": "پیشنهادها", "c": 5}, {"t": "نتیجه‌گیری نهایی", "c": 5}, {"t": "سپاس از توجه شما", "c": 6}];
-const CH = ['همه اسلایدها', 'فصل ۱: کلیات', 'فصل ۲: مبانی نظری', 'فصل ۳: روش‌شناسی', 'فصل ۴: یافته‌ها', 'فصل ۵: نتایج و راهبردها'];
-const CHN = ['آغاز ارائه', 'فصل اول ـ کلیات پژوهش', 'فصل دوم ـ مبانی نظری', 'فصل سوم ـ روش‌شناسی', 'فصل چهارم ـ یافته‌ها', 'فصل پنجم ـ نتایج و راهبردها', 'پایان ارائه'];
-const pad = n => String(n).padStart(2, '0');
-const SLV = SL.map((x, i) => ({id: 's' + pad(i + 1), src: `sl/s${pad(i + 1)}.jpg?v=3`, no: 'اسلاید ' + fa(i + 1), t: x.t, g: CHN[x.c],
-  d: x.v ? `کلیپ زنده این اسلاید: برگ «فیلم»` : ''}));
-(function slidesUI() {
-  const grid = $('slGrid'), chips = $('slChips'); let cur = 0;
-  CH.forEach((c, k) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c; b.dataset.k = k; b.setAttribute('aria-pressed', String(k === 0)); chips.appendChild(b); });
-  function draw() {
-    grid.innerHTML = '';
-    SL.forEach((x, i) => {
-      if (cur && x.c !== cur) return;
-      const b = document.createElement('button'); b.type = 'button'; b.className = 'slc' + (/^فصل /.test(x.t) ? ' div' : '');
-      const im = document.createElement('span'); im.className = 'th'; im.style.backgroundPosition = `${(i % 5) * 25}% ${Math.floor(i / 5) * 10}%`;
-      const tx = document.createElement('div'); tx.className = 'tx'; const n = document.createElement('span'); n.className = 'n'; n.textContent = fa(i + 1); const h = document.createElement('span'); h.className = 'h'; h.textContent = x.t; tx.append(n, h);
-      b.append(im, tx); if (x.v) { const v = document.createElement('span'); v.className = 'vb'; v.textContent = 'کلیپ زنده'; b.appendChild(v); }
-      b.addEventListener('click', () => openViewer(i, false, SLV)); grid.appendChild(b);
-    });
-  }
-  chips.addEventListener('click', e => { const b = e.target.closest('.chip'); if (!b) return; cur = +b.dataset.k; chips.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', String(c === b))); draw(); });
-  $('slStart').addEventListener('click', () => openViewer(0, false, SLV));
-  draw();
-})();
+/* ---------- downloads ---------- */
+$('copyCite').addEventListener('click', () => {
+  const t = $('citeTx').textContent;
+  const done = () => toast('متن ارجاع کپی شد');
+  if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(done, () => {});
+  else { const r = document.createRange(); r.selectNodeContents($('citeTx')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); try { document.execCommand('copy'); done(); } catch (e) {} s.removeAllRanges(); }
+});
 
 /* ---------- live 3D (three.js, loaded on demand) ---------- */
 let T3 = null, threeP = null;
